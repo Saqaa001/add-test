@@ -4,9 +4,10 @@ import re
 import firebase_admin
 from firebase_admin import credentials, firestore
 import os
+import json
 
 
-cred = credentials.Certificate("./add-test/latex.json")
+cred = credentials.Certificate(json.loads(st.secrets["firebase_credentials"]))
 firebase_admin.initialize_app(cred)
 
 

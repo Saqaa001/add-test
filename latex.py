@@ -6,7 +6,7 @@ from firebase_admin import credentials, firestore
 import os
 
 
-cred = credentials.Certificate("latex.json")
+cred = credentials.Certificate("add-test/latex.json")
 firebase_admin.initialize_app(cred)
 
 

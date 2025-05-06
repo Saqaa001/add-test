@@ -3,7 +3,7 @@ import pandas as pd
 import re
 import firebase_admin
 from firebase_admin import credentials, firestore
-///////////////
+
 # --- Firebase Init ---
 if not firebase_admin._apps:
     cred = credentials.Certificate("latex.json")

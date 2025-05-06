@@ -13,6 +13,7 @@ try:
     st.success("Firebase Initialized Successfully!")
 except Exception as e:
     st.error(f"Failed to initialize Firebase: {e}")
+    st.write(f"Error: {e}")
 
 # --- Clear form early if flagged ---
 if st.session_state.get("clear_form_flag", False):

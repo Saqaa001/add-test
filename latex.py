@@ -4,16 +4,16 @@ import re
 import firebase_admin
 from firebase_admin import credentials, firestore
 
-
-
-
-
-
 # --- Firebase Init ---
-if not firebase_admin._apps:
-    cred = credentials.Certificate("latex.json")
-    firebase_admin.initialize_app(cred)
-db = firestore.client()
+try:
+    if not firebase_admin._apps:
+        cred = credentials.Certificate("latex.json")  # Ensure this path is correct
+        firebase_admin.initialize_app(cred)
+    db = firestore.client()  # Creating Firestore client
+    st.success("✅ Firebase Initialized Successfully!")
+except Exception as e:
+    st.error(f"❌ Failed to initialize Firebase: {e}")
+    st.stop()
 
 # --- Clear form early if flagged ---
 if st.session_state.get("clear_form_flag", False):
@@ -24,6 +24,7 @@ if st.session_state.get("clear_form_flag", False):
 
 # --- Helpers ---
 def extract_dollar_sections(text):
+    """Extract LaTeX sections (enclosed in $...$) from the question text."""
     dollar_sections = re.findall(r'(\$.*?\$)', text)
     modified = text
     latex_map = {}
@@ -34,6 +35,7 @@ def extract_dollar_sections(text):
     return latex_map, modified
 
 def replace_placeholders(modified, latex_map):
+    """Replace placeholders with actual LaTeX values."""
     for key, val in latex_map.items():
         modified = modified.replace(key, f"${val}$")
     return modified
@@ -75,9 +77,10 @@ st.write(final_q)
 st.latex(final_q)
 st.write("")
 
-# --- Handlers ---
+# --- Firestore Functions ---
 @firestore.transactional
 def add_with_auto_id(transaction, question, answers):
+    """Add a new question to Firestore and increment the question ID."""
     counter_ref = db.collection("counters").document("questions")
     counter_doc = counter_ref.get(transaction=transaction)
     current_id = counter_doc.get("current") if counter_doc.exists else 0
@@ -128,4 +131,4 @@ try:
     else:
         st.info("No questions found in Firestore.")
 except Exception as e:
-    st.error(f"Failed to load questions: {e}")
+    st.error(f"❌ Failed to load questions: {e}")

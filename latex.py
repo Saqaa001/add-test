@@ -3,11 +3,14 @@ import pandas as pd
 import re
 import firebase_admin
 from firebase_admin import credentials, firestore
+import json
 
 # --- Firebase Init ---
 try:
     if not firebase_admin._apps:
-        cred = credentials.Certificate("latex.json")  # Ensure this path is correct
+        # Access the Firebase credentials from Streamlit secrets
+        firebase_creds = json.loads(st.secrets["firebase_credentials"])
+        cred = credentials.Certificate(firebase_creds)
         firebase_admin.initialize_app(cred)
     db = firestore.client()  # Creating Firestore client
     st.success("✅ Firebase Initialized Successfully!")

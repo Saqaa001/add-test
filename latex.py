@@ -1,18 +1,18 @@
 import streamlit as st
-import pandas as pd
-import re
 import firebase_admin
 from firebase_admin import credentials, firestore
 import json
+import re
+import pandas as pd
 
 # --- Firebase Init ---
 try:
     if not firebase_admin._apps:
-        # Access the Firebase credentials from Streamlit secrets
-        firebase_creds = json.loads(st.secrets["firebase_credentials"])
+        # Load Firebase credentials from Streamlit secrets
+        firebase_creds = json.loads(st.secrets["firebase_credentials"])  # Get credentials from secrets
         cred = credentials.Certificate(firebase_creds)
         firebase_admin.initialize_app(cred)
-    db = firestore.client()  # Creating Firestore client
+    db = firestore.client()  # Create Firestore client
     st.success("✅ Firebase Initialized Successfully!")
 except Exception as e:
     st.error(f"❌ Failed to initialize Firebase: {e}")

@@ -5,15 +5,10 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 # --- Firebase Init ---
-try:
-    if not firebase_admin._apps:
-        cred = credentials.Certificate("latex.json")  # Ensure this path is correct
-        firebase_admin.initialize_app(cred)
-    db = firestore.client()  # Creating Firestore client
-    st.success("Firebase Initialized Successfully!")
-except Exception as e:
-    st.error(f"Failed to initialize Firebase: {e}")
-    st.write(f"Error: {e}")
+if not firebase_admin._apps:
+    cred = credentials.Certificate("latex.json")
+    firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 # --- Clear form early if flagged ---
 if st.session_state.get("clear_form_flag", False):

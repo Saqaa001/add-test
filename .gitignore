@@ -1,1 +1,7 @@
-/latex.json
+__pycache__/
+*.pyc
+.vscode/
+latex.json
+.env
+
+.json

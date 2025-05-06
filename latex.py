@@ -5,7 +5,7 @@ import json
 import re
 import pandas as pd
 
-# --- Firebase Init ---
+# --- Firebase Initialization ---
 try:
     if not firebase_admin._apps:
         # Load Firebase credentials from Streamlit secrets
@@ -18,71 +18,71 @@ except Exception as e:
     st.error(f"❌ Failed to initialize Firebase: {e}")
     st.stop()
 
-# --- Clear form early if flagged ---
+# --- Clear Form Early if Flagged ---
 if st.session_state.get("clear_form_flag", False):
     for key in list(st.session_state.keys()):
         if key.startswith("latex_") or key.startswith("ans_") or key == "Question":
             st.session_state[key] = ""
     st.session_state["clear_form_flag"] = False  # Reset the flag
 
-# --- Helpers ---
-def extract_dollar_sections(text):
+# --- Helper Functions ---
+def extract_latex_sections(text):
     """Extract LaTeX sections (enclosed in $...$) from the question text."""
     dollar_sections = re.findall(r'(\$.*?\$)', text)
-    modified = text
+    modified_text = text
     latex_map = {}
     for i, section in enumerate(dollar_sections, 1):
         placeholder = f"F{i}"
-        modified = modified.replace(section, placeholder, 1)
-        latex_map[placeholder] = section[1:-1]
-    return latex_map, modified
+        modified_text = modified_text.replace(section, placeholder, 1)
+        latex_map[placeholder] = section[1:-1]  # Remove $ from LaTeX sections
+    return latex_map, modified_text
 
-def replace_placeholders(modified, latex_map):
+def replace_placeholders_with_latex(modified_text, latex_map):
     """Replace placeholders with actual LaTeX values."""
-    for key, val in latex_map.items():
-        modified = modified.replace(key, f"${val}$")
-    return modified
+    for placeholder, latex in latex_map.items():
+        modified_text = modified_text.replace(placeholder, f"${latex}$")
+    return modified_text
 
-# --- UI ---
+# --- UI Components ---
 st.title("📘 LaTeX Question Editor")
 
-# Question input
+# Question Input Field
 question_input = st.text_input("Question", key="Question")
 
-# Extract LaTeX sections from the question
-latex_map, modified_text = extract_dollar_sections(question_input)
+# Extract LaTeX sections and display modified text
+latex_map, modified_text = extract_latex_sections(question_input)
 st.write(modified_text)
 
-# LaTeX editing section
+# LaTeX Editing Section
 edited_latex_map = {}
-for ph in latex_map:
-    val = st.text_input(f"{ph}:", value=latex_map[ph], key=f"latex_{ph}")
-    edited_latex_map[ph] = val
+for placeholder, latex in latex_map.items():
+    val = st.text_input(f"{placeholder}:", value=latex, key=f"latex_{placeholder}")
+    edited_latex_map[placeholder] = val
     st.latex(val)
 
-# Answer Options
-col1, col2, col3, col4 = st.columns(4)
+# Answer Options (A, B, C, D)
 answer_inputs = {}
+col1, col2, col3, col4 = st.columns(4)
 for col, label in zip([col1, col2, col3, col4], ["A", "B", "C", "D"]):
     with col:
         val = st.text_input(label, key=f"ans_{label}")
         answer_inputs[label] = val
+        # Check for LaTeX expressions in the answer
         exps = re.findall(r'\$(.*?)\$', val)
         if exps:
-            for e in exps:
-                st.latex(e)
+            for exp in exps:
+                st.latex(exp)
         else:
             st.write(val)
 
-# Final reconstructed question
-final_q = replace_placeholders(modified_text, edited_latex_map)
-st.write(final_q)
-st.latex(final_q)
-st.write("")
+# Final Reconstructed Question
+final_question = replace_placeholders_with_latex(modified_text, edited_latex_map)
+st.write(final_question)
+st.latex(final_question)
 
 # --- Firestore Functions ---
 @firestore.transactional
-def add_with_auto_id(transaction, question, answers):
+def add_question_to_firestore(transaction, question, answers):
     """Add a new question to Firestore and increment the question ID."""
     counter_ref = db.collection("counters").document("questions")
     counter_doc = counter_ref.get(transaction=transaction)
@@ -107,9 +107,9 @@ with colA:
 with colB:
     st.button("🔄 Reset Form", on_click=lambda: st.session_state.update({"clear_form_flag": True}))
 
-# --- Submission logic ---
+# --- Form Submission Logic ---
 if submitted:
-    # Validation for required fields
+    # Validate Required Fields
     if not question_input.strip():
         st.warning("⚠️ Question cannot be empty.")
     elif any(not answer.strip() for answer in answer_inputs.values()):
@@ -117,11 +117,11 @@ if submitted:
     else:
         try:
             transaction = db.transaction()
-            new_id = add_with_auto_id(transaction, final_q, answer_inputs)
-            st.session_state["clear_form_flag"] = True  # Will trigger clear on next run
+            new_id = add_question_to_firestore(transaction, final_question, answer_inputs)
+            st.session_state["clear_form_flag"] = True  # Will trigger form reset on next run
             st.success(f"✅ Question saved with ID: {new_id}")
         except Exception as e:
-            st.error(f"❌ Failed to send question: {e}")
+            st.error(f"❌ Failed to send question to Firestore: {e}")
 
 # --- View All Questions ---
 st.subheader("📋 All Questions in Firestore")

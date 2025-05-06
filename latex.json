@@ -1,13 +1,1 @@
-{
-  "type": "service_account",
-  "project_id": "maths-quiz-app-66007",
-  "private_key_id": "e520fc5e4495e93115c41fe556a592bd3a68b748",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC84d1LzwbN5NqY\nEJ14bxAV10ngUB+roA9XXcK09GgRSsOzd37pXQINaT2x3xmH4I9HbZDMH55eE5ba\nc6KuKdI8dQFPRUlvmI8JZ/XdN4cFk87392sfpVoSx5RdCJBR+vwXmnJnuBMTqe1Q\n7aqBB7udrlR1TEMqXXgsYW3/1hWd4xR2ZNPzGLeL6alNMT8jvWvvKEGCbcirAb1Y\n4M+vhLzt0CrX5aiKBTNpSjFWLY5WoSDXQZ1ilwg9YNLza/7GyiXyUcIkOG1Djo4R\nT4HTN6+bIanzleVEzOE8Zbkd2/N5d1TRhfezrQBZe9WqphDsUPEx1FbjEZEROd/K\n++eP4orBAgMBAAECggEADZl67tkPywX4nIz1tD+AOlJZ8LCpgcNF14CEuGAF7i4i\nkRVq1IVB1JKzQnn8bfAZNjIJWZPH5KDRx8DJAck5Ez6ewtpg7eFfdcnqcJcYPaqQ\nHa0kJWR+a8O68Z01kZwvR8kdsPdr8t/VRR0XnbAKLiboey7r1xe2bgZF0+8nd0qh\nL8wHGy16t0628Iz2DLL+qvm16T1B/DN8QiviW1aX6ru86U1xboVKQ99oXhbkaa8j\nWtCZNZUn2sPw9v/gemiRGzLb0TuchsGOEx1gWx3HQZI9pUuxwRfUevXl65oTeuu9\nr7tgnQ7Szqnx9ZyGo6quc9uqZF3ANUFaYlz7ois2EQKBgQDwdFvoGHP05sIKOttc\nKftdRIGHi1to//B8/l1asOYxv4a2CJsHNgnJICaXPrc4DR6l8mhc5b46MzNmKFbu\nLltcGBmh25/uxMcU0Bd56Ddto8yjPNVG62kKR6w7zYRxo1OSAnDaOtJS/dMFGX4g\nqYtP7y2xZgZgeFPkIQ9cabsKRwKBgQDJF/WYNBesUpz5dc3THbmg0yOtJWmU5rzh\nuC6Tx6oDZ6sz3f4qoBPSiEVMP5O2+F9Em5Lwb+o7fVlGlabsl6cXxZrrU/vKGnrS\n6oRNerDZCmuQwfbZseqpmBOlTpsem85e3jcqwil1k/gP4sMD2okKlvP/QbhCvEI7\naGvSA0c+twKBgQDKwmPJl+0Xwwo2lCDrW59Rq3XKNVH0fXVuARP5aJgDtSxEDYek\nkgW4ansAKGtZQX7pkjo8s6Iv84LRDw0WtVJmmw/qM4duUNJLE5noO0+aDXh+4co6\njkG54Gw01X1sUbwjsBk3fEhkoRKzBycbJbyKv/X41D5mVLDw+ou4cpO8+wKBgBkv\ndwLpA04BysczieO3BVivGPjGhsKvY1ihyLOZfiGPClIkq4CLK/BiQMub6tQvpz7g\nfTa/zYZF3LiKZa2cEMFZbl2q1w4o4tknpgpOI3gLZg1rPY9mSQ2UjmFVxve+a8pV\n6nLgfnDLZ3YV4HbLF/7LiSOfB4TULzdhjJ9w6athAoGBAO1W3acsDJacxRvvgc3B\ncDoQB3mEKRIomH+JPglMh8DknqvZUBITO3pyL14OyqR1OtfmoQgzBFZe3HMw1qoV\nvryRkXyX4dvyBpVjDQ0YomtjJ9GgrTJAeMWcgzh1jSP6/ooUtMb5C3IqfpeGmhan\n7AadaLgq2B4ACiozgjfZnTSf\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-fbsvc@maths-quiz-app-66007.iam.gserviceaccount.com",
-  "client_id": "106973272920306054348",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40maths-quiz-app-66007.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}
+

@@ -3,6 +3,20 @@ import pandas as pd
 import re
 import firebase_admin
 from firebase_admin import credentials, firestore
+import os
+
+# Get the Firebase credentials from environment variables
+firebase_credentials = os.environ.get('FIREBASE_CREDENTIALS')
+
+# Initialize Firebase using the credentials
+cred = credentials.Certificate(firebase_credentials)
+firebase_admin.initialize_app(cred)
+
+
+
+
+
+
 
 # --- Firebase Init ---
 if not firebase_admin._apps:
